@@ -1,21 +1,18 @@
-MIT License
+The authors of this software MAKE NO WARRANTY as to the RELIABILITY,
+SUITABILITY, or USABILITY of this software. USE IT AT YOUR OWN RISK.
 
-Copyright (c) 2017 Mephisztoe
+This is a simple source code control utility. It was initially
+written by Casey Muratori but has since grown to include the fine
+work of Sean Barrett and Jeff Roberts. It is in the public domain.
+Anyone can use it, modify it, roll'n'smoke hardcopies of the source
+code, sell it to the terrorists, etc.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+But the authors make absolutely no warranty as to the reliability,
+suitability, or usability of the software. It works with files -
+probably files that are important to you. There might be bad bugs
+in here. It could delete them all. It could format your hard drive.
+We have no idea. If you lose all your files from using it, we will
+point and laugh. Cmirror is not a substitute for making backups.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+If you're a snappy coder and you'd like to contribute bug fixes or
+feature additions, please see http://www.mollyrocket.com/tools

@@ -125,7 +125,7 @@ static BOOL DeleteFileLowLevel(char *File)
 static bool CopyFileAlways;
 static bool DeleteFileAlways;
 
-#if !defined CopyFileEx
+//#if !defined CopyFileEx
 #define COPY_FILE_FAIL_IF_EXISTS              0x00000001
 #define COPY_FILE_RESTARTABLE                 0x00000002
 #define COPY_FILE_OPEN_SOURCE_FOR_WRITE       0x00000004
@@ -149,7 +149,7 @@ typedef BOOL WINAPI copy_file_ex_a(LPCSTR lpExistingFileName,
                                    LPVOID lpData,
                                    LPBOOL pbCancel,
                                    DWORD dwCopyFlags);
-#endif
+//#endif
 
 static BOOL
 Win32CopyFile(char *ExistingName, char *NewName, bool FailIfExists)
@@ -357,7 +357,7 @@ struct file_rule
     char *PreCheckinCommandParameters;
 };
 
-typedef stb_arr<file_rule> file_rule_list;
+typedef file_rule* file_rule_list;
 
 static file_rule *
 UpdateRuleFor(file_rule_list *FileRuleList, char *Wildcard)
@@ -920,6 +920,7 @@ BuildDirectoryFromCache(string_table &Strings, directory_contents &Contents,
 {
     bool Result = false, Compressed = true;
     unsigned int FileSize;
+    size_t FileSize_t;
     char *CacheBuffer;
     if (!CacheFileName[0]) {
         return Result;
@@ -929,7 +930,7 @@ BuildDirectoryFromCache(string_table &Strings, directory_contents &Contents,
     CacheBuffer = stb_decompress_fromfile(CacheFileName, &FileSize);
     if (!CacheBuffer) {
         // try uncompressed
-        CacheBuffer = stb_filec(CacheFileName, &FileSize);
+        CacheBuffer = stb_filec(CacheFileName, &FileSize_t);
         Compressed = false;
     }
     if (CacheBuffer)
@@ -1276,7 +1277,7 @@ struct sync_context
     mirror_config *Config;
     bool ContinueAlways;
     
-    stb_arr<sync_operation>Operations;
+    sync_operation* Operations;
 };
 
 static void
@@ -1776,7 +1777,7 @@ ExecuteSyncContext(sync_context &Context)
 static void
 FreeSyncContext(sync_context &Context)
 {
-    Context.Operations = stb_arr_free(Context.Operations);
+    Context.Operations = NULL;
 }
 
 // TODO: Pick this buffer size with a little less arbitrariness, shall we?
@@ -2713,7 +2714,7 @@ PrintMatrixOpCount(int *ReasonArray)
 #define MatrixStyle 1
 
 void
-SummarizeRecursively(stb_dirtree *d, stb_ptrmap *map, sync_context &Context)
+SummarizeRecursively(stb_dirtree2 *d, stb_ptrmap *map, sync_context &Context)
 {
     // if there are non-zero files, print a summary record
     if (stb_arr_len(d->files)) {
@@ -2761,7 +2762,7 @@ DoSummarizeDirs(sync_context &Context)
     stb_ptrmap *map = stb_ptrmap_new();
 
     // gather up a list of all source filenames
-    stb_arr(char *) files=NULL;
+    char** files=NULL;
     for (int i=0; i < stb_arr_len(Context.Operations); ++i)
     {
         char *name = FirstFileName(Context, Context.Operations[i]);
@@ -2774,7 +2775,7 @@ DoSummarizeDirs(sync_context &Context)
     }
 
     // build a tree out of the list
-    stb_dirtree *d = stb_dirtree_from_files(files, stb_arr_len(files));
+    stb_dirtree2 *d = stb_dirtree2_from_files(files, stb_arr_len(files));
 
     printf("Directory Summary\n");
     if(MatrixStyle)
